@@ -4,6 +4,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
 import DangerButton from '@/Components/DangerButton.vue';
+import CountryFlag from '@/Components/CountryFlag.vue';
 import { useForm } from '@inertiajs/vue3';
 
 const props = defineProps({
@@ -83,7 +84,10 @@ const deleteContact = () => {
                       <p v-if="contact.city || contact.region || contact.postal_code" class="text-gray-800">
                         {{ [contact.city, contact.region, contact.postal_code].filter(Boolean).join(', ') }}
                       </p>
-                      <p v-if="contact.country" class="text-gray-800">{{ contact.country }}</p>
+                      <div v-if="contact.country" class="flex items-center gap-2 mt-1">
+                        <CountryFlag :country="contact.country" />
+                        <p class="text-gray-800">{{ contact.country }}</p>
+                      </div>
                     </div>
                   </div>
                 </div>

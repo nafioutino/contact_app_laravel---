@@ -2,6 +2,7 @@
 import { Head, Link } from '@inertiajs/vue3';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
+import CountryFlag from '@/Components/CountryFlag.vue';
 import { ref, computed } from 'vue';
 
 const props = defineProps({
@@ -61,7 +62,10 @@ const filteredContacts = computed(() => {
                       </div>
                       <div>
                         <h3 class="text-lg font-semibold text-gray-800">{{ contact.full_name }}</h3>
-                        <p v-if="contact.country" class="text-sm text-gray-600">{{ contact.country }}</p>
+                        <div v-if="contact.country" class="flex items-center gap-2">
+                          <CountryFlag :country="contact.country" />
+                          <p class="text-sm text-gray-600">{{ contact.country }}</p>
+                        </div>
                       </div>
                     </div>
                     <div class="space-y-1">
