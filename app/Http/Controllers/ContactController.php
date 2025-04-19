@@ -7,12 +7,11 @@ use App\Models\Contact;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use Inertia\Response;
 use App\Models\User;
-use App\Notifications\ContactCreatedNotification;
 use Illuminate\Notifications\Notification;
+use App\Events\ContactEvent;
 
 class ContactController extends Controller
 {
@@ -68,9 +67,8 @@ class ContactController extends Controller
         ]);
 
         // Contact::create($validated);
-        $user = Auth::user();
         $contact = Contact::create($validated);
-        $user->notify(new ContactCreatedNotification($contact));
+        event(new ContactEvent($contact));
 
         return Redirect::route('contacts.index')->with('success', 'Contact créé avec succès.');
     }
