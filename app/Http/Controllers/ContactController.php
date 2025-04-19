@@ -3,11 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\Contact;
+// use Illuminate\Container\Attributes\Auth;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use Inertia\Response;
+use App\Models\User;
+use App\Notifications\ContactCreatedNotification;
+use Illuminate\Notifications\Notification;
 
 class ContactController extends Controller
 {
@@ -47,6 +52,7 @@ class ContactController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
+
         $validated = $request->validate([
             'first_name' => 'required|string|max:50',
             'last_name' => 'required|string|max:50',
@@ -61,7 +67,10 @@ class ContactController extends Controller
             'profile_image' => 'nullable|string',
         ]);
 
-        Contact::create($validated);
+        // Contact::create($validated);
+        $user = Auth::user();
+        $contact = Contact::create($validated);
+        $user->notify(new ContactCreatedNotification($contact));
 
         return Redirect::route('contacts.index')->with('success', 'Contact créé avec succès.');
     }
