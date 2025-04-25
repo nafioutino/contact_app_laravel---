@@ -35,8 +35,16 @@ const deleteContact = async () => {
   <AuthenticatedLayout>
     <template #header>
       <div class="flex justify-between items-center">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">Détails du contact</h2>
-        <Link :href="route('contacts.index')" class="text-indigo-600 hover:text-indigo-900">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight flex items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+          </svg>
+          Détails du contact
+        </h2>
+        <Link :href="route('contacts.index')" class="inline-flex items-center text-indigo-600 hover:text-indigo-900 transition-colors duration-300">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+          </svg>
           Retour aux contacts
         </Link>
       </div>
@@ -44,19 +52,19 @@ const deleteContact = async () => {
 
     <div class="py-12">
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-        <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+        <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg transition-all duration-300 hover:shadow-md">
           <div class="p-6 bg-white border-b border-gray-200">
             <div class="flex flex-col md:flex-row">
               <!-- Avatar/Initiales -->
               <div class="flex-shrink-0 flex justify-center mb-6 md:mb-0 md:mr-8">
-                <div class="w-32 h-32 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-500 font-bold text-4xl">
+                <div class="w-32 h-32 rounded-full bg-gradient-to-r from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold text-4xl shadow-lg transform transition-all duration-300 hover:scale-105">
                   {{ contact.first_name[0] }}{{ contact.last_name[0] }}
                 </div>
               </div>
               
               <!-- Informations du contact -->
               <div class="flex-grow">
-                <h1 class="text-2xl font-bold text-gray-800 mb-4">{{ contact.first_name }} {{ contact.last_name }}</h1>
+                <h1 class="text-2xl font-bold text-gray-800 mb-4 border-b-2 border-indigo-200 pb-2 inline-block">{{ contact.first_name }} {{ contact.last_name }}</h1>
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-y-4 gap-x-8">
                   <!-- Email -->
@@ -103,20 +111,31 @@ const deleteContact = async () => {
                 
                 <!-- Notes -->
                 <div v-if="contact.notes" class="mt-6">
-                  <h3 class="text-lg font-medium text-gray-800 mb-2">Notes</h3>
-                  <div class="bg-gray-50 p-4 rounded-md">
+                  <h3 class="text-lg font-medium text-gray-800 mb-2 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                    </svg>
+                    Notes
+                  </h3>
+                  <div class="bg-gray-50 p-4 rounded-md shadow-sm border-l-4 border-indigo-300 transition-all duration-300 hover:shadow">
                     <p class="text-gray-700 whitespace-pre-line">{{ contact.notes }}</p>
                   </div>
                 </div>
                 
                 <!-- Actions -->
                 <div class="mt-8 flex justify-between items-center">
-                  <DangerButton @click="deleteContact">
+                  <DangerButton @click="deleteContact" class="flex items-center transition-all duration-300 hover:bg-red-600">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                    </svg>
                     Supprimer
                   </DangerButton>
                   
                   <Link :href="route('contacts.edit', contact.id)">
-                    <PrimaryButton>
+                    <PrimaryButton class="flex items-center transition-all duration-300 hover:bg-indigo-600">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                      </svg>
                       Modifier
                     </PrimaryButton>
                   </Link>
