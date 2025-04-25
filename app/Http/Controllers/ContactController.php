@@ -12,6 +12,8 @@ use Inertia\Response;
 use App\Models\User;
 use Illuminate\Notifications\Notification;
 use App\Events\ContactEvent;
+use App\Events\ContactUpdatedEvent;
+use App\Events\ContactDeletedEvent;
 
 class ContactController extends Controller
 {
@@ -113,6 +115,7 @@ class ContactController extends Controller
         ]);
 
         $contact->update($validated);
+        event(new ContactUpdatedEvent($contact));
 
         return Redirect::route('contacts.index')->with('success', 'Contact mis à jour avec succès.');
     }
@@ -122,7 +125,9 @@ class ContactController extends Controller
      */
     public function destroy(Contact $contact): RedirectResponse
     {
+        $deletedContact = clone $contact;
         $contact->delete();
+        event(new ContactDeletedEvent($deletedContact));
 
         return Redirect::route('contacts.index')->with('success', 'Contact supprimé avec succès.');
     }
