@@ -8,6 +8,7 @@ import SecondaryButton from '@/Components/SecondaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import CountrySelect from '@/Components/CountrySelect.vue';
 import { Link } from '@inertiajs/vue3';
+import { showSuccessNotification, showErrorNotification } from '@/Components/SweetAlert';
 
 const form = useForm({
     first_name: '',
@@ -23,7 +24,10 @@ const form = useForm({
 });
 
 const submit = () => {
-    form.post(route('contacts.store'));
+    form.post(route('contacts.store'), {
+        onSuccess: () => showSuccessNotification('Contact créé avec succès'),
+        onError: () => showErrorNotification('Une erreur est survenue lors de la création')
+    });
 };
 </script>
 

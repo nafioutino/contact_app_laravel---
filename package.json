@@ -20,6 +20,7 @@
         "vue": "^3.4.0"
     },
     "dependencies": {
-        "@vueuse/core": "^13.1.0"
+        "@vueuse/core": "^13.1.0",
+        "sweetalert2": "^11.19.1"
     }
 }

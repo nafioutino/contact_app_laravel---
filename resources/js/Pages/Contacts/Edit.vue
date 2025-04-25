@@ -9,6 +9,7 @@ import TextInput from '@/Components/TextInput.vue';
 import CountrySelect from '@/Components/CountrySelect.vue';
 import { Link } from '@inertiajs/vue3';
 import DangerButton from '@/Components/DangerButton.vue';
+import { showConfirmDialog, showSuccessNotification, showErrorNotification } from '@/Components/SweetAlert';
 
 const props = defineProps({
   contact: Object,
@@ -28,12 +29,23 @@ const form = useForm({
 });
 
 const submit = () => {
-  form.patch(route('contacts.update', props.contact.id));
+  form.patch(route('contacts.update', props.contact.id), {
+    onSuccess: () => showSuccessNotification('Contact modifié avec succès'),
+    onError: () => showErrorNotification('Une erreur est survenue lors de la modification')
+  });
 };
 
-const deleteContact = () => {
-  if (confirm(`Êtes-vous sûr de vouloir supprimer ${props.contact.first_name} ${props.contact.last_name}?`)) {
-    form.delete(route('contacts.destroy', props.contact.id));
+const deleteContact = async () => {
+  const result = await showConfirmDialog(
+    'Confirmation de suppression',
+    `Êtes-vous sûr de vouloir supprimer ${props.contact.first_name} ${props.contact.last_name}?`
+  );
+  
+  if (result.isConfirmed) {
+    form.delete(route('contacts.destroy', props.contact.id), {
+      onSuccess: () => showSuccessNotification('Contact supprimé avec succès'),
+      onError: () => showErrorNotification('Une erreur est survenue lors de la suppression')
+    });
   }
 };
 </script>
