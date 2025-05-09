@@ -1,15 +1,3 @@
-<script setup>
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head } from '@inertiajs/vue3';
-import { onMounted } from 'vue';
-onMounted(() => {
-    Echo.channel('broadcast-test')
-        .listen('TestEvent', (e) => {
-            console.log(e);
-        });
-});
-</script>
-
 <template>
 
     <Head title="Dashboard" />
@@ -32,3 +20,10 @@ onMounted(() => {
         </div>
     </AuthenticatedLayout>
 </template>
+
+<script setup>
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import { Head } from '@inertiajs/vue3';
+import { onMounted } from 'vue';
+
+</script>

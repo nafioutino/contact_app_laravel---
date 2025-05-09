@@ -1,5 +1,6 @@
 <?php
 
+use App\Events\ContactEvent;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
@@ -30,8 +31,8 @@ Route::middleware('auth')->group(function () {
 });
 
 
-Route::get('/test', function() {
-    event(new TestEvent("Hello World!"));
-});
+// Route::get('/test', function() {
+//     event(new ContactEvent("Hello World!"));
+// });
 
 require __DIR__ . '/auth.php';

@@ -33,7 +33,7 @@ class ContactEvent implements ShouldBroadcastNow
     public function broadcastOn(): array
     {
         return [
-            new Channel('contacts'),
+            new Channel('contact-channel'),
         ];
     }
     
