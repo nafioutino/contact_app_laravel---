@@ -5,6 +5,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Events\TestEvent;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -26,6 +27,11 @@ Route::middleware('auth')->group(function () {
 
     // Routes pour les contacts
     Route::resource('contacts', ContactController::class);
+});
+
+
+Route::get('/test', function() {
+    event(new TestEvent("Hello World!"));
 });
 
 require __DIR__ . '/auth.php';

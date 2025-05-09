@@ -6,24 +6,21 @@ use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Broadcasting\PrivateChannel;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
-use App\Models\Contact;
 
-class ContactEvent implements ShouldBroadcastNow
+class TestEvent implements ShouldBroadcastNow
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     /**
      * Create a new event instance.
      */
-    public function __construct(public Contact $contact)
+    public function __construct(public $data)
     {
-        
+        //
     }
-   
 
     /**
      * Get the channels the event should broadcast on.
@@ -33,7 +30,7 @@ class ContactEvent implements ShouldBroadcastNow
     public function broadcastOn(): array
     {
         return [
-            new Channel('contacts'),
+            new Channel('broadcast-test'),
         ];
     }
     
@@ -42,6 +39,6 @@ class ContactEvent implements ShouldBroadcastNow
      */
     public function broadcastAs(): string
     {
-        return 'contact.created';
+        return 'test.event';
     }
 }
